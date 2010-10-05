@@ -1,11 +1,13 @@
-class ntp {
-
+class ntpbase {
     package { ntp:
         name => $operatingsystem ? {
             default    => "ntp",
             },
         ensure => present,
     }
+}
+
+class ntp inherits ntpbase {
 
     service { ntpd:
         name => $operatingsystem ? {
@@ -47,14 +49,16 @@ class ntp {
 
 }
 
-class ntpdate {
 
-    package { ntp:
-        name => $operatingsystem ? {
-            default    => "ntp",
-            },
-        ensure => present,
+class ntp::disabled inherits ntp {
+    Service['ntpd'] {
+        enable => false,
+        ensure => stopped,
     }
+
+}
+
+class ntpdate inherits ntpbase {
 
     file {    
              "/etc/cron.hourly/ntpdate":
