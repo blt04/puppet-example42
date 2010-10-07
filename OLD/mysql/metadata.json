@@ -6,5 +6,5 @@
   "puppetversion": "0.24",
   "summary": "Standard mysql module",
   "description": "This module can be used for basic mysql management",
-  "project_page": "http://www.example42.com",
+  "project_page": "http://www.example42.com"
 }}
