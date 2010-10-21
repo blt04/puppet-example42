@@ -4,6 +4,7 @@ class git {
         
 	package { "git":
                 name => $operatingsystem ? {
+                        ubuntu  => "git-core",
                         default => "git",
                         },
                 ensure => present,
