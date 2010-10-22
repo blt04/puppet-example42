@@ -20,6 +20,10 @@ class ntp inherits ntpbase {
         enable => true,
         hasrestart => true,
         hasstatus => true,
+        status => $operatingsystem ? {
+            ubuntu => '/etc/init.d/ntp status',
+            default => '/etc/init.d/ntpd status'
+        },
         require => Package[ntp],
         subscribe => File["ntp.conf"],
     }

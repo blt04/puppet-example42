@@ -38,8 +38,13 @@ class apache::params  {
 
     $hasstatus = $operatingsystem ? {
         debian  => false,
-        ubuntu  => false,
+        ubuntu  => true,
         default => true,
+    }
+
+    $status = $operatingsystem ? {
+        ubuntu  => '/etc/init.d/apache2 status',
+        default => '/etc/init.d/httpd status',
     }
 
     $username = $operatingsystem ? {

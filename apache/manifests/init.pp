@@ -23,6 +23,7 @@ class apache {
         pattern    => "${apache::params::servicepattern}",
         hasrestart => true,
         hasstatus  => "${apache::params::hasstatus}",
+        status     => "${apache::params::status}",
         require    => Package["apache"],
         subscribe  => File["httpd.conf"],
     }

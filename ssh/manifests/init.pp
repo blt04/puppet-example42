@@ -44,6 +44,10 @@ class ssh::server {
         enable => true,
         hasrestart => true,
         hasstatus => true,
+        status => $operatingsystem ? {
+            ubuntu => '/etc/init.d/ssh status',
+            default => '/etc/init.d/sshd status'
+        },
         require => Package["ssh-server"],
         subscribe => File["sshd.conf"],
     }
