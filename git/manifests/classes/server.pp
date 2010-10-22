@@ -14,7 +14,7 @@ class git::server inherits git {
                         mode => 644, owner => root, group => root,
                         require => Package["git-daemon"],
                         ensure => present,
-                        source => "puppet://$server/git/xinetd" ,
+                        source => "puppet://$server/modules/git/xinetd" ,
         }
 
 }

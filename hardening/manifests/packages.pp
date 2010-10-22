@@ -18,7 +18,7 @@ $packages_removed_flag = "/var/lock/puppet_removedpackages"
         mode => 644, owner => root, group => root,
         ensure => present,
         path   => "$package_list_path",
-        source => "puppet://$servername/hardening/package_remove_list",
+        source => "puppet://$servername/modules/hardening/package_remove_list",
     }
 
     notice ("Delete $packages_removed_flag to re exec packages removal script")

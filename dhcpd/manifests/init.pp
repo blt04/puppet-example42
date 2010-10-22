@@ -35,7 +35,7 @@ class dhcpd {
             path => $operatingsystem ?{
                 default => "/etc/sysconfig/dhcpd",
             },
-            source => "puppet://$servername/dhcpd/dhcpd.sysconfig",
+            source => "puppet://$servername/modules/dhcpd/dhcpd.sysconfig",
     }
 
 }

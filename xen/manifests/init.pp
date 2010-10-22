@@ -33,7 +33,7 @@ class xen {
 class xen::dual inherits xen {
 
     File["/etc/xen/xend-config.sxp"] {
-        source => "puppet://$servername/xen/xend-config.sxp-dual",
+        source => "puppet://$servername/modules/xen/xend-config.sxp-dual",
     }
 
     file {    
@@ -44,7 +44,7 @@ class xen::dual inherits xen {
             path => $operatingsystem ?{
                 default => "/etc/xen/scripts/network-dual",
             },
-            source => "puppet://$servername/xen/network-dual",
+            source => "puppet://$servername/modules/xen/network-dual",
     }
 }
 
@@ -56,7 +56,7 @@ class xen::lab42 inherits xen {
 class xen::lab42::alpha inherits xen::lab42 {
 
     File["/etc/xen/xend-config.sxp"] {
-        source => "puppet://$servername/xen/lab42/xend-config.sxp",
+        source => "puppet://$servername/modules/xen/lab42/xend-config.sxp",
     }
 
     file {    
@@ -67,7 +67,7 @@ class xen::lab42::alpha inherits xen::lab42 {
             path => $operatingsystem ?{
                 default => "/etc/xen/scripts/network-dual",
             },
-            source => "puppet://$servername/xen/lab42/network-lab42",
+            source => "puppet://$servername/modules/xen/lab42/network-lab42",
     }
 
     file {
@@ -75,7 +75,7 @@ class xen::lab42::alpha inherits xen::lab42 {
             mode => 600, owner => root, group => root,
             require => Package[xen],
             ensure => present,
-            source => "puppet://$servername/xen/lab42/start",
+            source => "puppet://$servername/modules/xen/lab42/start",
     }
 
     file {
@@ -83,7 +83,7 @@ class xen::lab42::alpha inherits xen::lab42 {
             mode => 600, owner => root, group => root,
             require => Package[xen],
             ensure => present,
-            source => "puppet://$servername/xen/lab42/omega",
+            source => "puppet://$servername/modules/xen/lab42/omega",
     }
 
     file {
@@ -91,7 +91,7 @@ class xen::lab42::alpha inherits xen::lab42 {
             mode => 600, owner => root, group => root,
             require => Package[xen],
             ensure => present,
-            source => "puppet://$servername/xen/lab42/monitor",
+            source => "puppet://$servername/modules/xen/lab42/monitor",
     }
 
     file {
@@ -99,7 +99,7 @@ class xen::lab42::alpha inherits xen::lab42 {
             mode => 600, owner => root, group => root,
             require => Package[xen],
             ensure => present,
-            source => "puppet://$servername/xen/lab42/live",
+            source => "puppet://$servername/modules/xen/lab42/live",
     }
 }
 

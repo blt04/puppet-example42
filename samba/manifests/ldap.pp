@@ -71,7 +71,7 @@ class samba::ldap inherits samba::server {
         "samba.schema":
             mode => 644, owner => root, group => root,
             ensure => present,
-            source => "puppet://$servername/samba/samba.schema",
+            source => "puppet://$servername/modules/samba/samba.schema",
             require => Package["openldap"],
             path => $operatingsystem ?{
                 default => "/etc/openldap/schema/samba.schema",

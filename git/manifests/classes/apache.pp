@@ -25,7 +25,7 @@ class git::apache {
                         path    => $operatingsystem ?{
                                 default => "/etc/httpd/conf.d/git.conf",
                                 },
-                        source  => "puppet://$server/git/git.conf.httpd",
+                        source  => "puppet://$server/modules/git/git.conf.httpd",
 			notify  => Service["apache"],
         }
 

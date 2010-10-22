@@ -62,7 +62,7 @@ class phpsyslogng inherits syslog-ng::server::mysql {
             group   => "root",
             mode    => "644",
             require => Package["php-syslog-ng"],
-            source  => "puppet://$server/phpsyslogng/phpsyslogng.cron",
+            source  => "puppet://$server/modules/phpsyslogng/phpsyslogng.cron",
     }
 
 

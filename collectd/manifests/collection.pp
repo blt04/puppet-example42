@@ -15,7 +15,7 @@ class collectd::collection {
                 },
             mode => 0755, owner => root, group => 0,
             require => Package['apache'],
-            source  => "puppet://$servername/collectd/collection.cgi",
+            source  => "puppet://$servername/modules/collectd/collection.cgi",
     }
 
 # To avoid different OS problems, collection.conf is placed in the same collection.cgi dir

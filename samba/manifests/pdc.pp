@@ -24,7 +24,7 @@ class samba::pdc inherits samba::server {
         "/etc/samba/conf.d/shares.conf":
             mode => 644, owner => root, group => root,
             ensure => present,
-            source => "puppet://$servername/samba/shares.conf",
+            source => "puppet://$servername/modules/samba/shares.conf",
             require => File["/etc/samba/conf.d"],
     }
 

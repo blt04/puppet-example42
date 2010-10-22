@@ -32,7 +32,7 @@ class yumreposerverbase {
             path => $operatingsystem ?{
                 default => "/etc/httpd/conf.d/yumrepo.conf",
             },
-            source => "puppet://$servername/yumreposerver/yumrepo.conf",
+            source => "puppet://$servername/modules/yumreposerver/yumrepo.conf",
     }
 
     file {

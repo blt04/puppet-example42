@@ -59,7 +59,7 @@ class rpmbuild::user inherits rpmbuild  {
             owner   => "rpmbuilder",
             group   => "rpmbuilder",
             mode    => "640",
-            source  => "puppet://$server/rpmbuild/rpmmacros",
+            source  => "puppet://$server/modules/rpmbuild/rpmmacros",
     }
 
     file {
@@ -67,7 +67,7 @@ class rpmbuild::user inherits rpmbuild  {
             owner   => "rpmbuilder",
             group   => "rpmbuilder",
             mode    => "640",
-            source  => "puppet://$server/rpmbuild/skel.spec",
+            source  => "puppet://$server/modules/rpmbuild/skel.spec",
             require => File["/home/rpmbuilder/rpmbuild/SPECS"],
     }
 

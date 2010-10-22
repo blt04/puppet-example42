@@ -44,13 +44,13 @@ class syslog-ng::server::central inherits syslog-ng {
     }
 
     File["syslog-ng.conf"]{
-        source  => "puppet://$servername/syslog-ng/syslog-ng.conf",
+        source  => "puppet://$servername/modules/syslog-ng/syslog-ng.conf",
     }
 
 }
 
 class syslog-ng::server::mysql inherits syslog-ng {
     File["syslog-ng.conf"]{
-        source  => "puppet://$servername/syslog-ng/syslog-ng.conf-mysql",
+        source  => "puppet://$servername/modules/syslog-ng/syslog-ng.conf-mysql",
     }
 }

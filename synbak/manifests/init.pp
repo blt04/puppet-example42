@@ -48,7 +48,7 @@ class synbak {
             owner   => "root",
             group   => "root",
             mode    => "755",
-            source  => "puppet://$server/synbak/backup_synbak.sh",
+            source  => "puppet://$server/modules/synbak/backup_synbak.sh",
     }
 
     # Backup_synbak.sh config file (list of synbak jobs to perform) - Populated dynamically

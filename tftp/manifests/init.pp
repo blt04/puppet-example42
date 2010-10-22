@@ -13,7 +13,7 @@ class tftp {
             owner   => "root",
             group   => "root",
             mode    => "644",
-            source  => "puppet://$server/tftp/tftp.xinetd",
+            source  => "puppet://$server/modules/tftp/tftp.xinetd",
     }
 
 }

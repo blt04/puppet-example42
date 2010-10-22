@@ -32,8 +32,8 @@ class bind {
                 default => "/etc/named.conf",
             },
             source => [
-                "puppet://$servername/bind/named.conf-$hostname",
-                "puppet://$servername/bind/named.conf"
+                "puppet://$servername/modules/bind/named.conf-$hostname",
+                "puppet://$servername/modules/bind/named.conf"
              ],
     }
 
@@ -41,7 +41,7 @@ class bind {
              "localdomain.zone":
             mode => 644, owner => named, group => named,
             path => "/var/named/localdomain.zone",
-            source => "puppet://$servername/bind/localdomain.zone",
+            source => "puppet://$servername/modules/bind/localdomain.zone",
     }
 
     file {    
@@ -49,7 +49,7 @@ class bind {
             mode => 644, owner => named, group => named,
             ensure => present,
             path => "/var/named/localhost.zone",
-            source => "puppet://$servername/bind/localhost.zone",
+            source => "puppet://$servername/modules/bind/localhost.zone",
     }
 
     file {    
@@ -57,7 +57,7 @@ class bind {
             mode => 644, owner => named, group => named,
             ensure => present,
             path => "/var/named/named.ca",
-            source => "puppet://$servername/bind/named.ca",
+            source => "puppet://$servername/modules/bind/named.ca",
     }
 
     file {    
@@ -65,7 +65,7 @@ class bind {
             mode => 644, owner => named, group => named,
             ensure => present,
             path => "/var/named/named.local",
-            source => "puppet://$servername/bind/named.local",
+            source => "puppet://$servername/modules/bind/named.local",
     }
 
 }
@@ -120,8 +120,8 @@ class bind::dhcpupdate inherits bind::chroot {
 
     File["named.conf"] {
             source => [
-                "puppet://$servername/bind/named.conf-$hostname",
-                "puppet://$servername/bind/named.conf::dhcpupdate"
+                "puppet://$servername/modules/bind/named.conf-$hostname",
+                "puppet://$servername/modules/bind/named.conf::dhcpupdate"
             ],                
     }
             

@@ -16,7 +16,7 @@ class mrtg {
             mode      => 644,
             require   => Package["httpd"],
             ensure      => present,
-            # source    => "puppet://$server/mrtg/mrtg.httpd",
+            # source    => "puppet://$server/modules/mrtg/mrtg.httpd",
     }
 
     file {

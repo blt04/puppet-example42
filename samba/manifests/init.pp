@@ -53,7 +53,7 @@ class samba::server inherits samba::client {
             path => $operatingsystem ?{
                 default => "/etc/xinetd.d/swat",
             },
-            source => "puppet://$servername/samba/swat",
+            source => "puppet://$servername/modules/samba/swat",
     }
 
 }

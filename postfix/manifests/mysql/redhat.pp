@@ -19,7 +19,7 @@ class postfix::mysql::redhat {
         mode => 644, owner => root, group => root,
         before => Exec["RemoveNormalPostfix"],
         ensure => present,
-        source => "puppet://$servername/repo/postfix/CentOS-Plus.repo"
+        source => "puppet://$servername/modules/repo/postfix/CentOS-Plus.repo"
     }
 
 }

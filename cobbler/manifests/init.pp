@@ -28,7 +28,7 @@ class cobbler {
             mode => 755, owner => root, group => root,
             require => Package[cobbler],
             ensure => present,
-            source => "puppet://$servername/cobbler/cobbler-reposync",
+            source => "puppet://$servername/modules/cobbler/cobbler-reposync",
     }
     file {
         "/etc/cobbler/settings":

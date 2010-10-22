@@ -24,7 +24,7 @@ class mailscanner::postfix inherits mailscanner {
         mode => 644, owner => root, group => root,
         require => Package[postfix],
         ensure => present,
-        source => "puppet://$servername/mailscanner/header_checks",
+        source => "puppet://$servername/modules/mailscanner/header_checks",
     }
 
     file {

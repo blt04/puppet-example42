@@ -22,7 +22,7 @@ class rsync {
                 freebsd => "/usr/local/etc/xinetd.d/rsync",
                 default => "/etc/xinetd.d/rsync",
             },
-#            source => "puppet://$server/rsync/rsync.xinetd",
+#            source => "puppet://$server/modules/rsync/rsync.xinetd",
     }
 
     file {

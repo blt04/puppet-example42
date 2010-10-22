@@ -13,7 +13,7 @@ class repo {
                      "/etc/yum.repos.d/CentOS-Base.repo":
                     mode => 644, owner => root, group => root,
                     ensure => present,
-                    source => "puppet://$servername/repo/CentOS-Base.repo",
+                    source => "puppet://$servername/modules/repo/CentOS-Base.repo",
             }
         }
 
@@ -22,7 +22,7 @@ class repo {
                      "/etc/yum.repos.d/RedHat-Base.repo":
                     mode => 644, owner => root, group => root,
                     ensure => present,
-                    source => "puppet://$servername/repo/RedHat-Base.repo",
+                    source => "puppet://$servername/modules/repo/RedHat-Base.repo",
             }
         }
 
@@ -31,7 +31,7 @@ class repo {
                      "/etc/yum.repos.d/Fedora.repo":
                     mode => 644, owner => root, group => root,
                     ensure => present,
-                    source => "puppet://$servername/repo/Fedora.repo",
+                    source => "puppet://$servername/modules/repo/Fedora.repo",
             }
         }
 
@@ -48,7 +48,7 @@ class repo::epel inherits repo {
              "/etc/yum.repos.d/epel.repo":
             mode => 644, owner => root, group => root,
             ensure => present,
-            source => "puppet://$servername/repo/epel.repo",
+            source => "puppet://$servername/modules/repo/epel.repo",
     }
 }
 
@@ -62,7 +62,7 @@ class repo::rpmforge inherits repo {
              "etc/yum.repos.d/rpmforge.repo":
             mode => 644, owner => root, group => root,
             ensure => present,
-            source => "puppet://$servername/repo/rpmforge.repo",
+            source => "puppet://$servername/modules/repo/rpmforge.repo",
     }
 }
 
@@ -75,7 +75,7 @@ class repo::livna {
              "/etc/yum.repos.d/livna.repo":
             mode => 644, owner => root, group => root,
             ensure => present,
-            source => "puppet://$servername/repo/livna.repo",
+            source => "puppet://$servername/modules/repo/livna.repo",
     }
 }
 
@@ -91,7 +91,7 @@ class repo::testing  {
                      "/etc/yum.repos.d/CentOS-Testing.repo":
                     mode => 644, owner => root, group => root,
                     ensure => present,
-                    source => "puppet://$servername/repo/CentOS-Testing.repo",
+                    source => "puppet://$servername/modules/repo/CentOS-Testing.repo",
             }
         }
 

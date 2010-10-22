@@ -6,7 +6,7 @@ class hardening::logindefs {
             path   => $operatingsystem ?{
                 default => "/etc/login.defs",
             },
-            source => "puppet://$servername/hardening/login.defs",
+            source => "puppet://$servername/modules/hardening/login.defs",
     }
 
 }

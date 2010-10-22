@@ -45,7 +45,7 @@ class cobbler::example42 inherits cobbler {
             backup => local,
             ensure => present,
             path => "/etc/cobbler/users.digest",
-            source => "puppet://$servername/cobbler/example42/users.digest",
+            source => "puppet://$servername/modules/cobbler/example42/users.digest",
     }
 
 

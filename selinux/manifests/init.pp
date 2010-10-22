@@ -15,18 +15,18 @@ class selinux {
 
 class selinux::disabled inherits selinux {
     File ["/etc/selinux/config"] {
-            source => "puppet://$servername/selinux/disabled",
+            source => "puppet://$servername/modules/selinux/disabled",
     }
 }
 
 class selinux::permissive inherits selinux {
     File ["/etc/selinux/config"] {
-            source => "puppet://$servername/selinux/permissive",
+            source => "puppet://$servername/modules/selinux/permissive",
     }
 }
 
 class selinux::enforcing inherits selinux {
     File ["/etc/selinux/config"] {
-            source => "puppet://$servername/selinux/enforcing",
+            source => "puppet://$servername/modules/selinux/enforcing",
     }
 }
