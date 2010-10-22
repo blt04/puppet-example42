@@ -2,15 +2,21 @@ import "*.pp"
 
 class ssh {
 
-    package { ssh:
-        name   => $operatingsystem ? {
-            default    => "openssh",
-            },
-        ensure => present,
+    case $operatingsystem {
+        ubuntu: {}
+        default: {
+            package { ssh:
+                name   => $operatingsystem ? {
+                    default    => "openssh",
+                },
+                ensure => present,
+            }
+        }
     }
 
     package { ssh-client:
         name   => $operatingsystem ? {
+            ubuntu     => 'openssh-client',
             default    => "openssh-clients",
             },
         ensure => present,
@@ -22,7 +28,7 @@ class ssh::server {
 
     include ssh
 
-    package { sshd:
+    package { ssh-server:
         name   => $operatingsystem ? {
             default    => "openssh-server",
             },
@@ -31,20 +37,20 @@ class ssh::server {
 
     service { sshd:
         name => $operatingsystem ? {
+            ubuntu  => "ssh",
             default => "sshd",
             },
         ensure => running,
         enable => true,
         hasrestart => true,
         hasstatus => true,
-        require => Package["sshd"],
+        require => Package["ssh-server"],
         subscribe => File["sshd.conf"],
     }
 
-    file {    
-             "sshd_config":
+    file { "sshd.conf":
             mode => 600, owner => root, group => root,
-            require => Package[ssh-server],
+            require => Package["ssh-server"],
             ensure => present,
             path => $operatingsystem ?{
                 default => "/etc/ssh/sshd_config",
