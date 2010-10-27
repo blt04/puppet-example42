@@ -63,7 +63,7 @@ class ssh::server {
 
 }
 
-define ssh::config ($value) {
+define ssh::server::config ($value) {
 
     # Augeas version. 
     augeas {
