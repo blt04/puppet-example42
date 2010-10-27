@@ -1,76 +1,86 @@
-import "*.pp"
-
+#
+# Class: collectd
+#
+# Manages collectd.
+# Include it to install and run collectd
+# It defines package, service, main configuration file.
+#
+# Usage:
+# include collectd
+#
 class collectd {
 
-case $operatingsystem {
-    ubuntu: { $collectd_configdir = "/etc/collectd" }
-    debian: { $collectd_configdir = "/etc/collectd" }
-    centos: { $collectd_configdir = "/etc" }
-    redhat: { $collectd_configdir = "/etc" }
-    suse: { $collectd_configdir = "/etc" }
-}
+    # Load the variables used in this module. Check the params.pp file 
+    require collectd::params
 
-    package {
-        'collectd':
-            name => $operatingsystem ? {
-                default => "collectd",
-            },
-            ensure => present;
+    # Basic Package - Service - Configuration file management
+    package { "collectd":
+        name   => "${collectd::params::packagename}",
+        ensure => present,
     }
 
-# In some OS (such as RedHat with EPEL) some plugins are provided in different packages
-# For sake of simplicity we install everything. May be tuned.
+    service { "collectd":
+        name       => "${collectd::params::servicename}",
+        ensure     => running,
+        enable     => true,
+        hasrestart => true,
+        hasstatus  => "${collectd::params::hasstatus}",
+        pattern    => "${collectd::params::processname}",
+        require    => Package["collectd"],
+        subscribe  => File["collectd.conf"],
+    }
 
+    file { "collectd.conf":
+        path    => "${collectd::params::configfile}",
+        mode    => "${collectd::params::configfile_mode}",
+        owner   => "${collectd::params::configfile_owner}",
+        group   => "${collectd::params::configfile_group}",
+        ensure  => present,
+        require => Package["collectd"],
+        notify  => Service["collectd"],
+        content => template("collectd/collectd.conf.erb"),
+    }
+
+    file { "collectd.d":
+        path    => "${collectd::params::configdir}",
+        mode    => "755",
+        owner   => "${collectd::params::configfile_owner}",
+        group   => "${collectd::params::configfile_group}",
+        ensure  => directory,
+        require => Package["collectd"],
+    }
+
+    # Include plugins
+    include collectd::plugins
+
+    # Include collection web interface if on server
+    if ($collectd::params::server_local == true) {
+        include collectd::collection 
+    }
+
+    # Include OS specific subclasses, if necessary
     case $operatingsystem {
-        redhat,centos: {
-            package {
-                'collectd-apache' : ensure => present ;
-                'collectd-dns' : ensure => present ;
-                'collectd-email' : ensure => present ;
-                'collectd-ipmi' : ensure => present ;
-                'collectd-mysql' : ensure => present ;
-                'collectd-nginx' : ensure => present ;
-                'collectd-nut' : ensure => present ;
-                'collectd-postgresql' : ensure => present ;
-                'collectd-rrdtool' : ensure => present ;
-                'collectd-sensors' : ensure => present ;
-                'collectd-snmp' : ensure => present ;
-                'collectd-virt' : ensure => present ;
-            }
+        redhat: { include collectd::redhat }
+        centos: { include collectd::redhat }
+        default: { }
+    }
+
+    # Include extended classes, if 
+    if $backup == "yes" { include collectd::backup }
+    if $monitor == "yes" { include collectd::monitor }
+    if $firewall == "yes" { include collectd::firewall }
+
+    # Include project specific class if $my_project is set
+    # The extra project class is by default looked in collectd module 
+    # If $my_project_onmodule == yes it's looked in your project module
+    if $my_project { 
+        case $my_project_onmodule {
+            yes,true: { include "${my_project}::collectd" }
+            default: { include "collectd::${my_project}" }
         }
-        default: {  }
     }
 
-
-    service {
-        'collectd':
-            ensure => running,
-            enable => true,
-            hasrestart => true,
-            pattern => collectd,
-            require => Package['collectd'];
-    }
-
-    file {
-        'collectd.conf':
-            ensure => present,
-            path => "$collectd_configdir/collectd.conf",
-#            mode => 0644, owner => root, group => 0,
-            require => Package['collectd'],
-            notify => Service['collectd'],
-            content => template("collectd/collectd.conf"),
-    }
-
-
-
-
-# Brutal force of /etc/collectd.d/ directory for plugins
-# To adapt or accept
-
-    file {
-        'collectd.d':
-            path => "$collectd_configdir/collectd.d",
-            ensure => directory,
-    }
+    # Include debug class is debugging is enabled ($debug=yes)
+    if ( $debug == "yes" ) or ( $debug == true ) { include collectd::debug }
 
 }

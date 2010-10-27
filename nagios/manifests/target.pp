@@ -1,15 +1,19 @@
-# manifests/target.pp
-
+#
+# Class: nagios::target
+#
+# Basic host target class
+# Include it on nodes to be monitored by Nagios
+#
+# Usage:
+# include nagios::target
+#
 class nagios::target {
 
-    @@nagios_host { "${fqdn}":
-    address => $ipaddress,
-    alias => $hostname,
-    use => 'generic-host',
-    }
+    nagios::host { $fqdn: }
 
-    if ($nagios_parents != '') {
-    Nagios_host["${fqdn}"] { parents => $nagios_parents }
-    }
+# TODO: Automatic hostgroup management is broken. We'll review it later
+#    nagios::hostgroup { "${nagios::params::hostgroups}-$fqdn": 
+#        hostgroup => "${nagios::params::hostgroups}",
+#    }
 
 }

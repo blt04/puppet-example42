@@ -1,39 +1,31 @@
 class collectd::collection {
 # Installs collection.cgi for Collectd central server
 
-    include collectd
     include apache
+    include collectd::params
 
-    file {
-        'collection.cgi':
-            ensure => present,
-            path => $operatingsystem ? {
-                ubuntu  => "/usr/lib/cgi-bin/collection.cgi",
-                debian  => "/usr/lib/cgi-bin/collection.cgi",
-                centos  => "/var/www/cgi-bin/collection.cgi",
-                redhat  => "/var/www/cgi-bin/collection.cgi",
-                },
-            mode => 0755, owner => root, group => 0,
-            require => Package['apache'],
-            source  => "puppet://$servername/modules/collectd/collection.cgi",
+    file { "collection.cgi":
+        ensure  => present,
+        path    => "${collectd::params::collectiondir}/collection.cgi",
+        mode    => "755",
+        owner   => "${collectd::params::configfile_owner}",
+        group   => "${collectd::params::configfile_group}",
+        require => Package['apache'],
+        source  => "puppet://$servername/modules/collectd/collection.cgi",
     }
 
 # To avoid different OS problems, collection.conf is placed in the same collection.cgi dir
-    file {
-        'collection.conf':
-            ensure => present,
-            path => $operatingsystem ? {
-                ubuntu  => "/usr/lib/cgi-bin/collection.conf",
-                debian  => "/usr/lib/cgi-bin/collection.conf",
-                centos  => "/var/www/cgi-bin/collection.conf",
-                redhat  => "/var/www/cgi-bin/collection.conf",
-                },
-            mode => 0644, owner => root, group => 0,
-            require => Package['apache'],
-            content => template("collectd/collection.conf.erb"),
+    file { "collection.conf":
+        ensure  => present,
+        path    => "${collectd::params::collectiondir}/collection.conf",
+        mode    => "644",
+        owner   => "${collectd::params::configfile_owner}",
+        group   => "${collectd::params::configfile_group}",
+        require => Package['apache'],
+        content => template("collectd/collection.conf.erb"),
     }
 
-
+# Quick and dirty dependencies setup
     package {
         'rrdtool-perl':
             name => $operatingsystem ? {
