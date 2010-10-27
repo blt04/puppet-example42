@@ -82,3 +82,38 @@ define ssh::server::config ($value) {
     #    replacement => "^$name $value",
     # }
 }
+
+
+define ssh::client::config ($host='\*', $name, $value) {
+
+    # The /etc/ssh/ssh_config lense doesn't exist by default
+    if (!defined(File['/usr/share/augeas/lenses/ssh.aug'])) {
+        file {
+            '/usr/share/augeas/lenses/ssh.aug':
+                ensure => present,
+                mode => 0644,
+                source => 'puppet:///modules/ssh/ssh.aug';
+        }
+    }
+
+    if ($host != '\*') and (!defined(Augeas["ssh_config_insert_$host"])) {
+        augeas {
+            "ssh_config_insert_$host":
+                context => '/files/etc/ssh/ssh_config',
+                changes => "ins $host before \\*",
+                onlyif  => "match $host size == 0",
+                require => File['/usr/share/augeas/lenses/ssh.aug'];
+        }
+    }
+
+
+    augeas {
+        "ssh_config_${host}_${name}":
+            context => "/files/etc/ssh/ssh_config/$host",
+            changes => "set $name $value",
+            require => $host ? {
+                '\*' => File['/usr/share/augeas/lenses/ssh.aug'],
+                default => [ File['/usr/share/augeas/lenses/ssh.aug'], Augeas["ssh_config_insert_$host"] ],
+            }
+    }
+}
