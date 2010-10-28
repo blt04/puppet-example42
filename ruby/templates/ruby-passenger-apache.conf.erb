@@ -1,4 +1,6 @@
 <IfModule passenger_module>
     PassengerRoot <%= ruby_passenger_gempath %>/passenger-<%= ruby_passenger_version %>
     PassengerRuby /usr/local/bin/ruby
+    PassengerMaxPoolSize <%= maxpoolsize %>
+    PassengerMinInstances <%= mininstances %>
 </IfModule>

@@ -1,4 +1,7 @@
 
+# TODO: Puppet 2.6.2 doesn't support class inheritance when parameterized
+# classes are used.  We currently are storing the version and gempath in
+# both the ruby-passenger and ruby-passenger::apache classes.
 
 class ruby-passenger {
 
@@ -16,10 +19,14 @@ class ruby-passenger {
 }
 
 
-class ruby-passenger::apache inherits ruby-passenger {
+class ruby-passenger::apache($mininstances='2', $maxpoolsize='2') {
 
-    include ::ruby-passenger
-    include ::apache
+    include ruby-passenger
+    include apache
+
+    # TODO: How to inherit this from above?
+    $ruby_passenger_version = '3.0.0'
+    $ruby_passenger_gempath = '/usr/local/lib/ruby/gems/1.8/gems'
 
     # Dependencies
     if ! defined(Package['build-essential'])      { package { build-essential:      ensure => installed } }
