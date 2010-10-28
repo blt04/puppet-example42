@@ -2,5 +2,8 @@
     PassengerRoot <%= ruby_passenger_gempath %>/passenger-<%= ruby_passenger_version %>
     PassengerRuby /usr/local/bin/ruby
     PassengerMaxPoolSize <%= maxpoolsize %>
+    PassengerPoolIdleTime <%= poolidletime %>
     PassengerMinInstances <%= mininstances %>
+    PassengerMaxInstancesPerApp <%= maxinstancesperapp %>
+    PassengerSpawnMethod <%= spawnmethod %>
 </IfModule>

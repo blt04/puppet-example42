@@ -19,7 +19,13 @@ class ruby-passenger {
 }
 
 
-class ruby-passenger::apache($mininstances='2', $maxpoolsize='2') {
+class ruby-passenger::apache(
+    $mininstances = '1',
+    $maxpoolsize = '6',
+    $poolidletime = '300',
+    $maxinstancesperapp = '0',
+    $spawnmethod = 'smart-lv2'
+) {
 
     include ruby-passenger
     include apache
