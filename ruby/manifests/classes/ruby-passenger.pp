@@ -70,12 +70,12 @@ class ruby-passenger::apache(
 
         '/etc/apache2/mods-enabled/passenger.load':
             ensure => 'link',
-            target => '/etc/apache2/mods-available/passenger.load',
+            target => '../mods-available/passenger.load',
             require => File['/etc/apache2/mods-available/passenger.load'];
 
         '/etc/apache2/mods-enabled/passenger.conf':
             ensure => 'link',
-            target => '/etc/apache2/mods-available/passenger.conf',
+            target => '../mods-available/passenger.conf',
             require => File['/etc/apache2/mods-available/passenger.conf'];
     }
 
