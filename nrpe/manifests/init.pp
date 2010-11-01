@@ -50,6 +50,7 @@ class nrpe {
         owner   => "${nrpe::params::configfile_owner}",
         group   => "${nrpe::params::configfile_group}",
         ensure  => directory,
+        require => Package['nrpe'];
     }
 
     # Include OS specific subclasses, if necessary
