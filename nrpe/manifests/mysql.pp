@@ -7,7 +7,7 @@ class nrpe::mysql {
 
         $mysql_user = 'nagios'
         $mysql_host = 'localhost'
-        $mysql_password = inline_template("<%= (1..25).collect{|a| (('a'..'z').to_a + ('A'..'Z').to_a + ('0'..'9').to_a + %w(# % & * + - : ? @ ^ _))[rand(75)] }.join %>")
+        $mysql_password = inline_template("<%= (1..25).collect{|a| (('a'..'z').to_a + ('A'..'Z').to_a + ('0'..'9').to_a + %w(% & * + - : ? @ ^ _))[rand(75)] }.join %>")
 
         mysql_user {"${mysql_user}@${mysql_host}":
             ensure => present,
