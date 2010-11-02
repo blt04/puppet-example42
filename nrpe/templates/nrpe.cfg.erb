@@ -15,9 +15,10 @@ connection_timeout=300
 include_dir=<%= scope.lookupvar('nrpe::params::configdir') %>/
 
 # COMMAND DEFINITIONS
-command[check_users]=<%= scope.lookupvar('nrpe::params::pluginsdir') %>/check_users -w 5 -c 10
-command[check_load]=<%= scope.lookupvar('nrpe::params::pluginsdir') %>/check_load -w 15,10,5 -c 30,25,20
-command[check_hda1]=<%= scope.lookupvar('nrpe::params::pluginsdir') %>/check_disk -w 20% -c 10% -p /dev/hda1
-command[check_zombie_procs]=<%= scope.lookupvar('nrpe::params::pluginsdir') %>/check_procs -w 5 -c 10 -s Z
-command[check_total_procs]=<%= scope.lookupvar('nrpe::params::pluginsdir') %>/check_procs -w 150 -c 200 
-
+command[check_disk]=<%= scope.lookupvar('nrpe::params::pluginsdir') %>/check_disk -w '$ARG1$' -c '$ARG2$' -p '$ARG3$'
+command[check_all_disks]=<%= scope.lookupvar('nrpe::params::pluginsdir') %>/check_disk -w '$ARG1$' -c '$ARG2$' -e
+command[check_load]=<%= scope.lookupvar('nrpe::params::pluginsdir') %>/check_load -w '$ARG1$' -c '$ARG2$'
+command[check_procs]=<%= scope.lookupvar('nrpe::params::pluginsdir') %>/check_procs -w '$ARG1$' -c '$ARG2$'
+command[check_procs_zombie]=<%= scope.lookupvar('nrpe::params::pluginsdir') %>/check_procs -w '$ARG1$' -c '$ARG2$' -s Z
+command[check_mysql]=HOME=/etc/nagios <%= scope.lookupvar('nrpe::params::pluginsdir') %>/check_mysql
+command[check_mysql_slave]=HOME=/etc/nagios <%= scope.lookupvar('nrpe::params::pluginsdir') %>/check_mysql -S -w '$ARG1$' -c '$ARG2$'
