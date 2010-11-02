@@ -24,7 +24,7 @@ class nrpe::mysql {
         exec { "Generate /etc/nagios/.my.cnf":
             command     => "/bin/echo -e '[mysql]\\nuser=${mysql_user}\\npassword=${mysql_password}\\n[mysqladmin]\\nuser=${mysql_user}\\npassword=${mysql_password}\\n[mysqldump]\\nuser=${mysql_user}\\npassword=${mysql_password}\\n[mysqlshow]\\nuser=${mysql_user}\\npassword=${mysql_password}\\n[client]\\nuser=${mysql_user}\\npassword=${mysql_password}' > /etc/nagios/.my.cnf",
             refreshonly => true,
-            require => Mysql_user["${mysql_user}@${mysql_host}"];
+            require => [Mysql_user["${mysql_user}@${mysql_host}"], Package['nrpe']];
         }
 
         file { "/etc/nagios/.my.cnf":
