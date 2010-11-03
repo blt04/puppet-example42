@@ -53,6 +53,16 @@ class nrpe {
         require => Package['nrpe'];
     }
 
+    file { "nrpe-check_mysql_slave.pl":
+        path    => "${nrpe::params::pluginsdir}/check_mysql_slave.pl",
+        mode    => "755",
+        owner   => "${nrpe::params::configfile_owner}",
+        group   => "${nrpe::params::configfile_group}",
+        ensure  => present,
+        require => Package["nrpe"],
+        source  => 'puppet:///modules/nrpe/check_mysql_slave.pl';
+    }
+
     # Include OS specific subclasses, if necessary
     case $operatingsystem {
         debian,ubuntu: { include nrpe::debian }

@@ -21,4 +21,4 @@ command[check_load]=<%= scope.lookupvar('nrpe::params::pluginsdir') %>/check_loa
 command[check_procs]=<%= scope.lookupvar('nrpe::params::pluginsdir') %>/check_procs -w '$ARG1$' -c '$ARG2$'
 command[check_procs_zombie]=<%= scope.lookupvar('nrpe::params::pluginsdir') %>/check_procs -w '$ARG1$' -c '$ARG2$' -s Z
 command[check_mysql]=HOME=/etc/nagios <%= scope.lookupvar('nrpe::params::pluginsdir') %>/check_mysql
-command[check_mysql_slave]=HOME=/etc/nagios <%= scope.lookupvar('nrpe::params::pluginsdir') %>/check_mysql -S -w '$ARG1$' -c '$ARG2$'
+command[check_mysql_slave]=HOME=/etc/nagios <%= scope.lookupvar('nrpe::params::pluginsdir') %>/check_mysql_slave.pl --master '$ARG1$' --noslave '$ARG2$' --wsec '$ARG3$' --csec '$ARG4$' --warn '$ARG5$' --crit '$ARG6$'
