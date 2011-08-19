@@ -2,7 +2,7 @@
 # It disables syslog to avoid conflicts
 class rsyslog {
 
-include syslog::disable
+#include syslog::disable
 
     package {
         "rsyslog":
@@ -31,6 +31,7 @@ include syslog::disable
         mode    => "644",
         require   => Package["rsyslog"],
         path    => $operatingsystem ?{
+               'ubuntu' => "/etc/default/rsyslog",
                default => "/etc/sysconfig/rsyslog",
                },
     }
