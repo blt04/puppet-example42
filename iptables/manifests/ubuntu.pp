@@ -10,6 +10,12 @@ class iptables::ubuntu {
     }
 
     file {
+        'iptables-conf-dir':
+            path => '/etc/iptables',
+            ensure => 'directory',
+            mode => '0755',
+            owner => 'root',
+            group => 'root';
         'iptables':
             path => '/etc/iptables/rules',
             ensure => 'file',
@@ -17,7 +23,7 @@ class iptables::ubuntu {
             owner => 'root',
             group => 'root',
             content => $iptables_rules,
-            require => Package['iptables-persistent'];
+            require => [File['iptables-conf-dir'], Package['iptables-persistent']];
     }
 
     service {
