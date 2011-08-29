@@ -25,4 +25,4 @@ command[check_mysql_slave]=HOME=/etc/nagios <%= scope.lookupvar('nrpe::params::p
 command[check_pacemaker]=/usr/bin/sudo /usr/sbin/crm_mon -s
 command[check_mem]=<%= scope.lookupvar('nrpe::params::pluginsdir') %>/check_mem.pl -f -C -w '$ARG1$' -c '$ARG2$'
 command[check_file_age]=<%= scope.lookupvar('nrpe::params::pluginsdir') %>/check_file_age -w '$ARG1$' -c '$ARG2$' '$ARG3$'
-command[check_mongdob]=<%= scope.lookupvar('nrpe::params::pluginsdir') %>/check_mongodb.py -H '$HOSTADDRESS$' -A '$ARG1$' -p '$ARG2$' -W '$ARG3$' -C '$ARG4$'
+command[check_mongodb]=<%= scope.lookupvar('nrpe::params::pluginsdir') %>/check_mongodb.py -H localhost -A '$ARG1$' -P '$ARG2$' -W '$ARG3$' -C '$ARG4$'
