@@ -71,6 +71,14 @@ class nrpe {
             ensure  => present,
             require => Package["nrpe"],
             source  => 'puppet:///modules/nrpe/check_mem.pl';
+        "nrpe-check_mongodb.py":
+            path    => "${nrpe::params::pluginsdir}/check_mongodb.py",
+            mode    => "755",
+            owner   => "${nrpe::params::configfile_owner}",
+            group   => "${nrpe::params::configfile_group}",
+            ensure  => present,
+            require => Package["nrpe"],
+            source  => 'puppet:///modules/nrpe/check_mongodb.py';
     }
 
     # Include OS specific subclasses, if necessary
