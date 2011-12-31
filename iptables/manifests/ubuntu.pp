@@ -24,6 +24,12 @@ class iptables::ubuntu {
             group => 'root',
             content => $iptables_rules,
             require => [File['iptables-conf-dir'], Package['iptables-persistent']];
+        'iptables-rules.v4':
+            path => '/etc/iptables/rules.v4',
+            ensure => 'link',
+            target => 'rules',
+            owner => 'root',
+            group => 'root';
     }
 
     service {
