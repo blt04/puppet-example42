@@ -8,10 +8,10 @@ use DBI;
 # Set DEFAULT inputs
 my $options = {
     'master' => 'localhost', 'slave' => 'localhost',
-    'port' => 3306, 'crit' => 100000, 'warn' => 10000,
+    'port' => 3306, 'socket' => '', 'crit' => 100000, 'warn' => 10000,
     'csec' => 3600, 'wsec' => 600, 'noslave' => 'warn', 'debug' => 0
 };
-GetOptions($options, "master=s", "slave=s", "port=i", "noslave=s",
+GetOptions($options, "master=s", "slave=s", "port=i", "socket=s", "noslave=s",
     "crit=i", "warn=i", "csec=i", "wsec=i", "debug", "help");
 my $max_binlog;
 
@@ -27,6 +27,7 @@ $0: check replication between mysql databases
   --master <host>    - MySQL instance running as a master server
   --slave <host>     - MySQL instance running as a slave server
   --port <port>      - port number MySQL is listening on
+  --socket <socket>  - socket MySQL is listening on
   --crit <positions> - Number of binlog positions for critical state
   --warn <positions> - Number of binlog positions for warning state
   --csec <seconds>   - Number of seconds behind master for critical state
@@ -106,7 +107,11 @@ sub get_replication_status {
     require Carp;
     Carp::cluck "host" if !defined $host;
     Carp::cluck "port" if !defined $options->{'port'};
-    my $dbh = DBI->connect("DBI:mysql:host=$host;port=$options->{'port'};mysql_read_default_file=$ENV{HOME}/.my.cnf");
+    my $host_or_socket = "host=$host;port=$options->{'port'};";
+    if ($options->{'socket'} && $options->{'socket'} ne '') {
+        $host_or_socket = "mysql_socket=$options->{'socket'};";
+    }
+    my $dbh = DBI->connect("DBI:mysql:".$host_or_socket."mysql_read_default_file=$ENV{HOME}/.my.cnf");
     if (not $dbh) {
         print "UNKNOWN: cannot connect to $host";
         exit 3;
