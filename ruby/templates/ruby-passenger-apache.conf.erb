@@ -1,5 +1,5 @@
 <IfModule passenger_module>
-    PassengerRoot <%= ruby_passenger_gempath %>/passenger-<%= ruby_passenger_version %>
+    PassengerRoot <%= gempath %>/passenger-<%= version %>
     PassengerRuby /usr/local/bin/ruby
     PassengerMaxPoolSize <%= maxpoolsize %>
     PassengerPoolIdleTime <%= poolidletime %>

@@ -3,16 +3,14 @@
 # classes are used.  We currently are storing the version and gempath in
 # both the ruby-passenger and ruby-passenger::apache classes.
 
-class ruby-passenger {
-
-    $ruby_passenger_version = '3.0.0'
-    $ruby_passenger_gempath = '/usr/local/lib/ruby/gems/1.8/gems'
-
-
+class ruby-passenger(
+    $version = '3.0.0',
+    $gempath = '/usr/local/lib/ruby/gems/1.8/gems'
+) {
     package {
         'passenger':
             provider => 'gem',
-            ensure => $ruby_passenger_version,
+            ensure => $version,
             alias => 'ruby-passenger',
             require => Package['ruby'];
     }
@@ -24,15 +22,14 @@ class ruby-passenger::apache(
     $maxpoolsize = '6',
     $poolidletime = '300',
     $maxinstancesperapp = '0',
-    $spawnmethod = 'smart-lv2'
+    $spawnmethod = 'smart-lv2',
+    $version = '3.0.0',
+    $gempath = '/usr/local/lib/ruby/gems/1.8/gems'
 ) {
 
+    class { 'ruby-passenger': version => $version, gempath => $gempath }
     include ruby-passenger
     include apache
-
-    # TODO: How to inherit this from above?
-    $ruby_passenger_version = '3.0.0'
-    $ruby_passenger_gempath = '/usr/local/lib/ruby/gems/1.8/gems'
 
     # Dependencies
     if ! defined(Package['build-essential'])      { package { build-essential:      ensure => installed } }
@@ -44,7 +41,7 @@ class ruby-passenger::apache(
     exec {
         'passenger-install-apache2-module':
             command => '/usr/local/bin/passenger-install-apache2-module -a',
-            creates => "${ruby_passenger_gempath}/passenger-${ruby_passenger_version}/ext/apache2/mod_passenger.so",
+            creates => "${gempath}/passenger-${version}/ext/apache2/mod_passenger.so",
             logoutput => 'on_failure',
             require => Package[
                 'apache2',
@@ -59,7 +56,7 @@ class ruby-passenger::apache(
 
     file {
         '/etc/apache2/mods-available/passenger.load':
-            content => "LoadModule passenger_module ${ruby_passenger_gempath}/passenger-${ruby_passenger_version}/ext/apache2/mod_passenger.so",
+            content => "LoadModule passenger_module ${gempath}/passenger-${version}/ext/apache2/mod_passenger.so\n",
             ensure => file,
             require => Exec['passenger-install-apache2-module'];
 
