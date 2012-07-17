@@ -2,7 +2,7 @@
 ########## Managed by puppet
 ##########
 
-log_level 4
+log_level 1
 log_file /var/log/munin/munin-node.log
 pid_file /var/run/munin/munin-node.pid
 background 1
