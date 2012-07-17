@@ -15,7 +15,8 @@ class munin::client inherits munin {
     case $operatingsystem {
     openbsd: { include munin::client::openbsd }
     darwin: { include munin::client::darwin }
-    debian,ubuntu: { include munin::client::debian }
+    debian: { include munin::client::debian }
+    ubuntu: { include munin::client::ubuntu }
     gentoo: { include munin::client::gentoo }
     centos: { include munin::client::package }
     default: { include munin::client::base }
