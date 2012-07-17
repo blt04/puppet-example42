@@ -13,12 +13,12 @@ class munin::plugins::base {
         notify => Service['munin-node'],
     }
 
-    munin::plugin {
-    [ df, cpu, interrupts, load, memory, netstat, open_files,
-        processes, swap, uptime, users, vmstat
-    ]:
-        ensure => present,
-    }
+    #munin::plugin {
+    #[ df, cpu, interrupts, load, memory, netstat, open_files,
+    #    processes, swap, uptime, users, vmstat
+    #]:
+    #    ensure => present,
+    #}
     include munin::plugins::interfaces
 
     case $kernel {
