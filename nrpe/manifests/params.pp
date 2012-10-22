@@ -3,7 +3,25 @@
 # Sets internal variables and defaults for nrpe module
 # This class is automatically loaded in all the classes that use the values set here 
 #
-class nrpe::params  {
+class nrpe::params(
+  $nrpe_allowed_hosts        = '',
+  $nrpe_port                 = '',
+  $nrpe_dont_blame_nrpe      = '',
+  $nrpe_use_ssl              = '',
+  $nrpe_monitor_target       = '',
+  $nrpe_monitor_baseurl      = '',
+  $nrpe_monitor_url_pattern  = '',
+  $nrpe_monitor_port         = '',
+  $nrpe_monitor_url          = '',
+  $nrpe_monitor_process      = '',
+  $nrpe_monitor_plugin       = '',
+  $nrpe_backup_target        = '',
+  $nrpe_backup_frequency     = '',
+  $nrpe_backup_data          = '',
+  $nrpe_backup_log           = '',
+  $nrpe_firewall_source      = '',
+  $nrpe_firewall_destination = ''
+) {
 
 ## DEFAULTS FOR VARIABLES USERS CAN SET
 # (Here are set the defaults, provide your custom variables externally)
